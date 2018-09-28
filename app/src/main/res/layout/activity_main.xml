@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.main.MainActivity">
 
     <FrameLayout
-        android:id="@+id/fl_container"
+        android:id="@+id/containerFl"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -18,7 +18,7 @@
         android:background="#CCFFFFFF" />
 
     <com.flyco.tablayout.CommonTabLayout
-        android:id="@+id/tab_layout"
+        android:id="@+id/commonTabLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
@@ -32,6 +32,6 @@
         app:tl_textUnselectColor="@android:color/darker_gray"
         app:tl_textsize="10sp"
         app:tl_underline_color="#DDDDDD"
-        app:tl_underline_height="1dp" />
+        app:tl_underline_height="0dp" />
 
 </RelativeLayout>

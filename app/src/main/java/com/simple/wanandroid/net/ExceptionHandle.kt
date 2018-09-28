@@ -1,7 +1,7 @@
 package com.simple.wanandroid.net
 
 import com.google.gson.JsonParseException
-import com.simple.wanandroid.MLog
+import com.simple.wanandroid.utils.MLog
 import org.json.JSONException
 import java.net.ConnectException
 import java.net.SocketTimeoutException

@@ -4,6 +4,7 @@ import android.content.Context
 import com.bumptech.glide.Glide
 import com.bumptech.glide.GlideBuilder
 import com.bumptech.glide.Registry
+import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.load.engine.cache.LruResourceCache
 import com.bumptech.glide.module.AppGlideModule
 import java.io.InputStream
@@ -12,6 +13,7 @@ import java.io.InputStream
  * @author hych
  * @date 2018/9/27 14:46
  */
+@GlideModule
 class CustomAppGlideModule : AppGlideModule() {
 
     /**

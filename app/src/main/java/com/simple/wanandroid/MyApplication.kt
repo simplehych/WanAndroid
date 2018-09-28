@@ -3,8 +3,8 @@ package com.simple.wanandroid
 import android.app.Activity
 import android.app.Application
 import android.content.Context
-import android.hardware.display.DisplayManager
 import android.os.Bundle
+import com.simple.wanandroid.utils.MLog
 import com.squareup.leakcanary.RefWatcher
 import kotlin.properties.Delegates
 
