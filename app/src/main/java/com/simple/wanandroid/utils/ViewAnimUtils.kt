@@ -38,7 +38,7 @@ object ViewAnimUtils {
         anim.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationStart(animation: Animator?) {
                 super.onAnimationStart(animation)
-                view.setBackgroundColor(ContextCompat.getColor(context, color))
+                view.setBackgroundColor(color)
             }
 
             override fun onAnimationEnd(animation: Animator?) {
@@ -57,6 +57,7 @@ object ViewAnimUtils {
                           color: Int,
                           listener: OnRevealAnimationListener) {
 
+
         val cx = (view.left + view.right) / 2
         val cy = (view.top + view.bottom) / 2
         val initialRadius = view.width
@@ -67,7 +68,7 @@ object ViewAnimUtils {
         anim.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationStart(animation: Animator) {
                 super.onAnimationStart(animation)
-                view.setBackgroundColor(ContextCompat.getColor(context, color))
+                view.setBackgroundColor(color)
             }
 
             override fun onAnimationEnd(animation: Animator) {

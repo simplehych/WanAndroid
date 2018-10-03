@@ -23,7 +23,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.MainActivity" />
-        <activity android:name=".ui.main.SearchActivity" />
+        <activity
+            android:name=".ui.main.SearchActivity"
+            android:theme="@style/AppTheme.Translucent" />
 
     </application>
 

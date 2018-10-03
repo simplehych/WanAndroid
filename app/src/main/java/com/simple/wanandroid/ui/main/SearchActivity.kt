@@ -1,6 +1,8 @@
 package com.simple.wanandroid.ui.main
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
+import android.graphics.Color
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.transition.Fade
@@ -71,9 +73,9 @@ class SearchActivity : BaseActivity() {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private fun animateRevealShow() {
         ViewAnimUtils.animateRevealShow(this,
-                searchLayout,
-                searchTv.width / 2,
-                R.color.background_floating_material_dark,
+                searchFrame,
+                fab_circle.width / 2,
+                Color.parseColor("#00ff00"),
                 object : ViewAnimUtils.OnRevealAnimationListener {
                     override fun onRevealHide() {
 
@@ -86,18 +88,25 @@ class SearchActivity : BaseActivity() {
                 })
     }
 
+    @SuppressLint("RestrictedApi")
     private fun setUpView() {
         val animation = AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
         animation.duration = 300
         searchLayout.startAnimation(animation)
         searchLayout.visibility = View.VISIBLE
+        fab_circle.visibility = View.GONE
+
     }
 
+    @SuppressLint("RestrictedApi")
     override fun onBackPressed() {
+        fab_circle.visibility = View.VISIBLE
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ViewAnimUtils.animateRevealHide(this,
-                    searchTv,
-                    searchTv.width / 2, R.color.background_floating_material_dark,
+                    searchFrame,
+                    fab_circle.width / 2,
+                    Color.parseColor("#00ff00"),
                     object : ViewAnimUtils.OnRevealAnimationListener {
                         override fun onRevealHide() {
                             defaultBackPressed()
