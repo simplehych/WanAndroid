@@ -10,7 +10,7 @@ import com.simple.wanandroid.base.IPresenter
 interface HomeContract {
 
     interface View : IBaseView {
-        fun setHomeData(homeBean: HomeBean?)
+        fun setHomeData(homeBean: HomeBean)
         fun setMoreDate(itemList: ArrayList<Item>)
         fun showError(msg: String, errorCode: Int)
     }

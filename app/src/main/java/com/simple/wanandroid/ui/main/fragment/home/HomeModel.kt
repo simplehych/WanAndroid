@@ -13,6 +13,7 @@ class HomeModel {
     fun requestHomeData(num: Int): Observable<HomeBean> {
         return RetrofitManager.service
                 .getFirstHomeData(num)
+                .compose(SchedulerUtils.ioToMain())
     }
 
     fun loadMoreData(url: String): Observable<HomeBean> {

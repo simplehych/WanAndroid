@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
+import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -11,6 +12,7 @@ import com.scwang.smartrefresh.header.MaterialHeader
 import com.simple.wanandroid.R
 import com.simple.wanandroid.base.BaseFragment
 import com.simple.wanandroid.ui.main.SearchActivity
+import com.simple.wanandroid.ui.main.fragment.home.adapter.HomeAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,7 +25,7 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
     private var mTitle: String? = null
     private val num: Int = 1
-    private var mHomeAdapter: HomeAdaopter? = null
+    private var mHomeAdapter: HomeAdapter? = null
     private var loadingMore = false
     private var isRefresh = false
     private var mMaterialHeader: MaterialHeader? = null
@@ -135,12 +137,17 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
     }
 
-    override fun setHomeData(homeBean: HomeBean?) {
-        homeBean?.apply {
-
-        } ?: homeBean.apply {
-
+    override fun setHomeData(homeBean: HomeBean) {
+        // Adapter
+        mHomeAdapter = activity?.let {
+            HomeAdapter(it, homeBean.issueList[0].itemList)
         }
+        //设置 banner 大小
+        mHomeAdapter?.setBannerSize(homeBean.issueList[0].count)
+
+        mRecyclerView.adapter = mHomeAdapter
+        mRecyclerView.layoutManager = linearLayoutManager
+        mRecyclerView.itemAnimator = DefaultItemAnimator()
     }
 
     override fun setMoreDate(itemList: ArrayList<Item>) {
@@ -150,8 +157,8 @@ class HomeFragment : BaseFragment(), HomeContract.View {
     }
 
     override fun showLoading() {
-        if (!isRefresh){
-            isRefresh=false
+        if (!isRefresh) {
+            isRefresh = false
         }
     }
 

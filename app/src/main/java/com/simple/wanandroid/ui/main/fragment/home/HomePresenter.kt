@@ -32,10 +32,20 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
                         nextPageUrl = homeBean.nextPageUrl
                         val newBannerItemList = homeBean.issueList[0].itemList
 
+                        newBannerItemList.filter { item ->
+                            item.type == "banner2" || item.type == "horizontalScrollCard"
+                        }.forEach { item ->
+                            //移除 item
+                            newBannerItemList.remove(item)
+                        }
+
+                        // 重新赋值 Banner 长度
+                        bannerHomeBean!!.issueList[0].count = bannerHomeBean!!.issueList[0].itemList.size
+
                         bannerHomeBean?.issueList?.apply {
                             this[0].itemList.addAll(newBannerItemList)
                         }
-                        setHomeData(bannerHomeBean)
+                        setHomeData(bannerHomeBean!!)
                     }
                 }, { t ->
                     mRootView?.apply {
