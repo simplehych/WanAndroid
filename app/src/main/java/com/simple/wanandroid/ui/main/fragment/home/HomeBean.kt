@@ -24,6 +24,7 @@ data class Issue(val releaseTime: Long,
 data class Item(val type: String,
                 val data: Data,
                 val tag: String)
+    : Serializable
 
 data class Data(val dataType: String,
                 val text: String,
@@ -99,7 +100,7 @@ data class WebUrl(val raw: String,
 
 data class PlayInfo(val name: String,
                     val url: String,
-                    val type: String,
+                    var type: String,
                     val urlList: ArrayList<Url>) : Serializable
 
 data class Consumption(val collectionCount: Int,

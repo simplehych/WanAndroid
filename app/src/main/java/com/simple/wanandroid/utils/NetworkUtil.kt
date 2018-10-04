@@ -9,9 +9,16 @@ import android.net.ConnectivityManager
  */
 object NetworkUtil {
 
-    fun isNetworkAvailable(context: Context):Boolean{
+    fun isNetworkAvailable(context: Context): Boolean {
         val manager = context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val info = manager.activeNetworkInfo
         return !(null == info || !info.isAvailable)
     }
+
+    fun isWifi(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo!=null&&activeNetworkInfo.type == ConnectivityManager.TYPE_WIFI
+    }
+
 }

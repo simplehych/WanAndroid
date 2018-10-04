@@ -12,7 +12,7 @@
         android:layout_height="80dp"
         android:layout_centerInParent="true"
         android:transitionName="transition_reveal"
-        app:backgroundTint="#EEEEEE"
+        app:backgroundTint="#00ff00"
         app:elevation="0dp"
         app:fabSize="normal"
         tools:targetApi="lollipop" />
@@ -20,8 +20,7 @@
     <RelativeLayout
         android:id="@+id/searchLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#00ff00">
+        android:layout_height="match_parent">
 
     </RelativeLayout>
 </RelativeLayout>

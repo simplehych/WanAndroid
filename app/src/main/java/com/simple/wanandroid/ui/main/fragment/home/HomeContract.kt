@@ -11,7 +11,7 @@ interface HomeContract {
 
     interface View : IBaseView {
         fun setHomeData(homeBean: HomeBean)
-        fun setMoreDate(itemList: ArrayList<Item>)
+        fun setMoreData(itemList: ArrayList<Item>)
         fun showError(msg: String, errorCode: Int)
     }
 

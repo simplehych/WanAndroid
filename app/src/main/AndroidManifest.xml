@@ -27,6 +27,10 @@
             android:name=".ui.main.SearchActivity"
             android:theme="@style/AppTheme.Translucent" />
 
+        <activity
+            android:name=".ui.main.fragment.vediodetail.VideoDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+
     </application>
 
 </manifest>

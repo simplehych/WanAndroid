@@ -70,4 +70,7 @@ dependencies {
     //Banner
     implementation 'cn.bingoogolapple:bga-banner:2.2.4@aar'
 
+    // 视屏播放器
+    implementation 'com.shuyu:GSYVideoPlayer:2.1.1'
+
 }

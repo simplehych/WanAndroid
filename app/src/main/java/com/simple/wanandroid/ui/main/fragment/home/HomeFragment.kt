@@ -48,8 +48,8 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
     }
 
-    private val simpledateFormat by lazy {
-        SimpleDateFormat("- MMM. dd, 'Brunch' -", Locale.ENGLISH)
+    private val simpleDateFormat by lazy {
+//        SimpleDateFormat("- MMM. dd, 'Brunch' -", java.util.Locale.ENGLISH)
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_home
@@ -72,7 +72,8 @@ class HomeFragment : BaseFragment(), HomeContract.View {
                     val childCount = mRecyclerView.childCount
                     val itemCount = mRecyclerView.layoutManager?.itemCount
                     val firstVisibleItem = (mRecyclerView.layoutManager as LinearLayoutManager).findFirstCompletelyVisibleItemPosition()
-                    if (firstVisibleItem + childCount == itemCount) {
+                    println("/  firstVisibleItem: $firstVisibleItem  /  childCount: $childCount   /   itemCount: $itemCount  ")
+                    if (firstVisibleItem + childCount > itemCount!!) {
                         if (!loadingMore) {
                             loadingMore = true
                             mPresenter.loadMoreData()
@@ -150,7 +151,9 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         mRecyclerView.itemAnimator = DefaultItemAnimator()
     }
 
-    override fun setMoreDate(itemList: ArrayList<Item>) {
+    override fun setMoreData(itemList: ArrayList<Item>) {
+        loadingMore = false
+        mHomeAdapter?.addItemData(itemList)
     }
 
     override fun showError(msg: String, errorCode: Int) {
@@ -164,5 +167,9 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
     override fun dismissLoading() {
         mRefreshLayout.finishRefresh()
+    }
+
+    fun getColor(colorId: Int): Int {
+        return resources.getColor(colorId)
     }
 }

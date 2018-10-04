@@ -9,10 +9,10 @@ import android.util.Log
 object MLog {
 
     fun i(tag: String, msg: String) {
-        Log.i(tag, msg)
+        Log.i(tag, "$tag $msg")
     }
 
     fun e(tag: String, msg: String) {
-        Log.e(tag, msg)
+        Log.e(tag, "$tag $msg")
     }
 }

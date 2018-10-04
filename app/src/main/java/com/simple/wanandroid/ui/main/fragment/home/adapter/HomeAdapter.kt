@@ -2,6 +2,11 @@ package com.simple.wanandroid.ui.main.fragment.home.adapter
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.os.Build
+import android.support.v4.app.ActivityCompat
+import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.util.Pair
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +17,7 @@ import com.simple.wanandroid.R
 import com.simple.wanandroid.durationFormat
 import com.simple.wanandroid.glide.GlideApp
 import com.simple.wanandroid.ui.main.fragment.home.Item
+import com.simple.wanandroid.ui.main.fragment.vediodetail.VideoDetailActivity
 import io.reactivex.Observable
 
 /**
@@ -19,7 +25,7 @@ import io.reactivex.Observable
  * @date 2018/9/30 11:05
  */
 class HomeAdapter(var mContext: Context,
-                  var mData: ArrayList<Item> )
+                  var mData: ArrayList<Item>)
     : RecyclerView.Adapter<HomeViewHolder>() {
 
     protected var mInflater: LayoutInflater? = null
@@ -171,10 +177,27 @@ class HomeAdapter(var mContext: Context,
     }
 
     private fun goToVideoPlayer(activity: Activity, view: View, itemData: Item) {
+        val intent = Intent(activity, VideoDetailActivity::class.java)
+        intent.putExtra(VideoDetailActivity.BUNDLE_VIDEO_DATA, itemData)
+        intent.putExtra(VideoDetailActivity.TRANSITION, true)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val pair = Pair(view, VideoDetailActivity.IMG_TRANSITION)
+            val options = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(activity, pair)
+            ActivityCompat.startActivity(activity, intent, options.toBundle())
+
+        } else {
+            activity.startActivity(intent)
+        }
     }
 
     public fun setBannerSize(count: Int) {
         bannerItemSize = count
+    }
+
+    fun addItemData(itemList: ArrayList<Item>) {
+        this.mData.addAll(itemList)
+        notifyDataSetChanged()
     }
 
     interface MultiType<T> {
