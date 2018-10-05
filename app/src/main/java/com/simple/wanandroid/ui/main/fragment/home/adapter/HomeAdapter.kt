@@ -26,7 +26,7 @@ import io.reactivex.Observable
  */
 class HomeAdapter(var mContext: Context,
                   var mData: ArrayList<Item>)
-    : RecyclerView.Adapter<HomeViewHolder>() {
+    : RecyclerView.Adapter<ViewHolder>() {
 
     protected var mInflater: LayoutInflater? = null
     private var mTypeSupport: MultiType<Item>? = null
@@ -47,14 +47,14 @@ class HomeAdapter(var mContext: Context,
         mTypeSupport = typeSupport
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (viewType) {
             ITEM_TYPE_BANNER ->
-                HomeViewHolder(inflaterView(R.layout.item_home_banner, parent))
+                ViewHolder(inflaterView(R.layout.item_home_banner, parent))
             ITEM_TYPE_TEXT_HEADER ->
-                HomeViewHolder(inflaterView(R.layout.item_home_header, parent))
+                ViewHolder(inflaterView(R.layout.item_home_header, parent))
             else ->
-                HomeViewHolder(inflaterView(R.layout.item_home_content, parent))
+                ViewHolder(inflaterView(R.layout.item_home_content, parent))
         }
     }
 
@@ -80,7 +80,7 @@ class HomeAdapter(var mContext: Context,
         }
     }
 
-    override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data: Item = mData[position]
         when (getItemViewType(position)) {
             ITEM_TYPE_BANNER -> {
@@ -90,8 +90,8 @@ class HomeAdapter(var mContext: Context,
 
                 Observable.fromIterable(bannerItemData)
                         .subscribe { list ->
-                            bannerFeedList.add(list.data.cover.feed)
-                            bannerTitleList.add(list.data.title)
+                            bannerFeedList.add(list.data?.cover?.feed ?: "")
+                            bannerTitleList.add(list.data?.title ?: "")
                         }
 
                 val bgaBanner = holder.getView<BGABanner>(R.id.banner)
@@ -120,7 +120,7 @@ class HomeAdapter(var mContext: Context,
         }
     }
 
-    private fun setVideoItem(holder: HomeViewHolder, item: Item) {
+    private fun setVideoItem(holder: ViewHolder, item: Item) {
         val itemData = item.data
 
         val defAvatar = R.mipmap.default_avatar

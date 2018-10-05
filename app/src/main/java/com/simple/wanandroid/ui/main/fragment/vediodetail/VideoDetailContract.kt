@@ -21,7 +21,6 @@ interface VideoDetailContract {
         fun setRecentRelatedVideo(itemList: ArrayList<Item>)
 
         fun setErrorMsg(errorMsg: String)
-
     }
 
     interface Presenter : IPresenter<View> {
@@ -29,5 +28,7 @@ interface VideoDetailContract {
         fun loadVideoInfo(itemInfo: Item)
 
         fun requestRelatedVideo(id: Long)
+
+        fun saveWatchVideoHistory(itemInfo: Item)
     }
 }

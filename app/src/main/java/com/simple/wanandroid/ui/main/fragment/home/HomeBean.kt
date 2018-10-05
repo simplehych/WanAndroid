@@ -22,7 +22,7 @@ data class Issue(val releaseTime: Long,
                  val nextPageUrl: String)
 
 data class Item(val type: String,
-                val data: Data,
+                val data: Data?,
                 val tag: String)
     : Serializable
 

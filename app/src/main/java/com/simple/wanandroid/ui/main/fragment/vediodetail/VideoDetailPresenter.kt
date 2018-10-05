@@ -22,7 +22,7 @@ class VideoDetailPresenter : BasePresenter<VideoDetailContract.View>(), VideoDet
     override fun loadVideoInfo(itemInfo: Item) {
         val activity = (mRootView as Activity)
         checkViewAttached()
-        val playInfo = itemInfo.data.playInfo
+        val playInfo = itemInfo.data?.playInfo
         val wifi = NetworkUtil.isWifi(activity)
         playInfo?.run {
             if (size > 1) {
@@ -45,7 +45,7 @@ class VideoDetailPresenter : BasePresenter<VideoDetailContract.View>(), VideoDet
         val displayMetrics = activity.resources.displayMetrics
         val widthPixels = displayMetrics.widthPixels
         val heightPixels = displayMetrics.heightPixels
-        val backgroundUrl = itemInfo.data.cover.blurred + "/thumbnail/${widthPixels}x$heightPixels"
+        val backgroundUrl = itemInfo.data?.cover?.blurred + "/thumbnail/${widthPixels}x$heightPixels"
         mRootView?.setBackground(backgroundUrl)
         mRootView?.setVideoInfo(itemInfo)
     }
@@ -67,5 +67,9 @@ class VideoDetailPresenter : BasePresenter<VideoDetailContract.View>(), VideoDet
 
                 })
         addSubscription(disposable)
+    }
+
+    override fun saveWatchVideoHistory(itemInfo: Item) {
+
     }
 }

@@ -4,14 +4,11 @@ import android.content.res.Configuration
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.support.v4.view.ViewCompat
+import android.support.v7.widget.LinearLayoutManager
 import android.transition.Transition
-import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.shuyu.gsyvideoplayer.listener.LockClickListener
-import com.shuyu.gsyvideoplayer.listener.StandardVideoAllCallBack
-import com.shuyu.gsyvideoplayer.utils.CommonUtil.showSupportActionBar
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer
@@ -30,13 +27,17 @@ import kotlinx.android.synthetic.main.activity_video_detail.*
 class VideoDetailActivity : BaseActivity(), VideoDetailContract.View {
 
     private var isTransition = false
-    private lateinit var itemDate: Item
+    private lateinit var itemData: Item
+    private var itemList = ArrayList<Item>()
     private var transition: Transition? = null
 
     private var orientationUtils: OrientationUtils? = null
     private var isPlay: Boolean = false
     private var isPause: Boolean = false
 
+    private val mAdapter by lazy {
+        VideoDetailAdapter(this, itemList)
+    }
 
     private val mPresenter by lazy { VideoDetailPresenter() }
 
@@ -50,14 +51,21 @@ class VideoDetailActivity : BaseActivity(), VideoDetailContract.View {
     override fun layoutId(): Int = R.layout.activity_video_detail
 
     override fun initData() {
-        itemDate = intent.getSerializableExtra(BUNDLE_VIDEO_DATA) as Item
+        itemData = intent.getSerializableExtra(BUNDLE_VIDEO_DATA) as Item
         isTransition = intent.getBooleanExtra(TRANSITION, false)
+
+        mPresenter.saveWatchVideoHistory(itemData)
     }
 
     override fun initView() {
         mPresenter.attachView(this)
         initTransition()
         initVideoViewConfig()
+
+        mRecyclerView.layoutManager = LinearLayoutManager(this)
+        mRecyclerView.adapter = mAdapter
+
+        mAdapter.setOnItemDetailClick { mPresenter.loadVideoInfo(it) }
     }
 
     override fun start() {
@@ -65,7 +73,7 @@ class VideoDetailActivity : BaseActivity(), VideoDetailContract.View {
 
 
     fun loadVideoInfo() {
-        mPresenter.loadVideoInfo(itemDate)
+        mPresenter.loadVideoInfo(itemData)
     }
 
     override fun setVideo(url: String) {
@@ -75,6 +83,10 @@ class VideoDetailActivity : BaseActivity(), VideoDetailContract.View {
     }
 
     override fun setVideoInfo(itemInfo: Item) {
+        itemData = itemInfo
+        mAdapter.addData(itemInfo)
+        // 请求相关的最新等视频
+        mPresenter.requestRelatedVideo(itemInfo.data?.id?:0)
     }
 
     override fun setBackground(url: String) {
@@ -87,6 +99,8 @@ class VideoDetailActivity : BaseActivity(), VideoDetailContract.View {
     }
 
     override fun setRecentRelatedVideo(itemList: ArrayList<Item>) {
+        mAdapter.addData(itemList)
+        this.itemList = itemList
     }
 
     override fun setErrorMsg(errorMsg: String) {
@@ -106,7 +120,7 @@ class VideoDetailActivity : BaseActivity(), VideoDetailContract.View {
         val videoThumb = ImageView(this)
         videoThumb.scaleType = ImageView.ScaleType.CENTER_CROP
         GlideApp.with(this)
-                .load(itemDate.data.cover.feed)
+                .load(itemData.data?.cover?.feed)
                 .centerCrop()
                 .into(videoThumb)
         mVideoView.thumbImageView = videoThumb
